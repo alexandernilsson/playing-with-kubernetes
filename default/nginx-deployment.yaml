@@ -14,3 +14,18 @@ spec:
         image: nginx:alpine
         ports:
         - containerPort: 80
+        # restart if nginx is not running
+        livenessProbe:
+          exec:
+            command:
+            - pgrep
+            - nginx
+          initialDelaySeconds: 10
+          timeoutSeconds: 2
+        # take out of the load balancer if nginx doesn't respond on *:80/
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          timeoutSeconds: 2
