@@ -7,8 +7,6 @@ metadata:
     app: route53-kubernetes
 spec:
   replicas: 1
-  nodeSelector:
-    kubeadm.alpha.kubernetes.io/role: master
   selector:
     app: route53-kubernetes
   template:
@@ -19,3 +17,5 @@ spec:
       containers:
         - image: quay.io/molecule/route53-kubernetes:v1.2.0
           name: route53-kubernetes
+      nodeSelector:
+        kubeadm.alpha.kubernetes.io/role: master
