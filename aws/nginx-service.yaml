@@ -1,19 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: prometheus
-  labels:
-    name: prometheus
+  name: nginx
   annotations:
-    prometheus.io/scrape: 'true'
-    dns.alpha.kubernetes.io/external: "prometheus.dev.infra.meltwater.io"
+    dns.alpha.kubernetes.io/external: "nginx.dev.infra.meltwater.io"
     service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:eu-west-1:849122192484:certificate/dd2c372c-f158-4998-8b73-2fc71382ded7"
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
-  namespace: monitoring
 spec:
   type: LoadBalancer
   ports:
-  - targetPort: 9090
-    port: 443
+  - port: 443
+    targetPort: 80
   selector:
-    app: prometheus
+    app: nginx
